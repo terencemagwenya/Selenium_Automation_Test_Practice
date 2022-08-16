@@ -1,17 +1,13 @@
 package mfstestcases;
-
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pageobject.AddToCartPage;
 import pageobject.LoginPage;
-
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -28,21 +24,18 @@ public class CodingQuestion1 extends BaseTestCase {
         Assert.assertEquals(driver.getTitle(), "My Store");
     }
 
-//    2.   Sign-In using following credentials:
-//         Username: testautomationmffigmail.com
-//         Password: TestAutomation(d123
-
     @Test(priority = 2)
     public void login() {
+
         LoginPage loginPage = new LoginPage(driver);
         driver.get(baseurl);
         loginPage.clickSignInLink();
-        loginPage.setUsername("testautomationmfs@gmail.com");
-        loginPage.setPassword("TestAutomation@123");
+        loginPage.setUsername(properties.getProperty("username"));
+        loginPage.setPassword(properties.getProperty("password"));
         loginPage.clickSubmitButton();
         loggedIn = true;
         // assertion of the login
-        Assert.assertEquals(driver.getTitle(), "My account - My Store");
+        Assert.assertEquals(driver.getTitle(), "My account - My Store", "Login Failed ");
     }
 
 //3.	On landing page, under POPULAR category we see a list of apparels,
@@ -78,8 +71,6 @@ public class CodingQuestion1 extends BaseTestCase {
         }
         System.out.println("Popular category Prices sorted from Low to High");
         output.forEach((Price, Name) -> System.out.println(Price + " - " + Name));
-
-
     }
 
 //    Scroll Up - Navigate to Women >> Dresses >> Evening Dresses
@@ -105,17 +96,14 @@ public class CodingQuestion1 extends BaseTestCase {
         // Hover over product container
         addToCartPage.hoverOnProductContainer();
         addToCartPage.clickMoreButton();
-        addToCartPage.quantintyTextBox(); //clear text box ans send k3ys
+        addToCartPage.quantityTextBox(); //clear text box ans send k3ys
         addToCartPage.selectPinkColor();
         addToCartPage.selectSize("M"); // select dress size
         addToCartPage.clickSubmitButton();
-
         wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.id("layer_cart")));
         String cartMessage = driver.findElement(By.xpath("//*[@id=\"layer_cart\"]/div[1]/div[1]/h2")).getText().trim();
         String expectedCartMessage = "Product successfully added to your shopping cart";
         Assert.assertEquals(cartMessage, expectedCartMessage, "Product not successfully added to shopping cart");
-
-
         String quantity = driver.findElement(By.id("layer_cart_product_quantity")).getText();
         String cartAttributes = driver.findElement(By.id("layer_cart_product_attributes")).getText();
         String[] cartAttribute = cartAttributes.split(",");
@@ -132,14 +120,12 @@ public class CodingQuestion1 extends BaseTestCase {
         String shipCost = shippingCost.replace("$", "");
         double expTotalCost = Double.parseDouble(totalProdCost) + Double.parseDouble(shipCost);
         String expectedTotalCost = "$" + expTotalCost;
-
         // Assertion of the quantity and price
         Assert.assertEquals(quantity, "3", "Order Quantity not correct");
         Assert.assertEquals(colour, "Pink", "Colour not correct");
         Assert.assertEquals(size, "M", "The size is not correct");
         Assert.assertEquals(totalProductCost, "$152.97", "The Total product cost is not correct");
         Assert.assertEquals(totalCost, expectedTotalCost, "The Total product cost is not correct");
-
         // Printing on the console
         System.out.printf("Quantity is : %14s \n", quantity);
         System.out.printf("Size is : %18s \n", size);
@@ -147,11 +133,7 @@ public class CodingQuestion1 extends BaseTestCase {
         System.out.printf("Total Product Cost is : %9s \n", totalProdCost);
         System.out.printf("Shipping Cost is : %13s \n", shippingCost);
         System.out.printf("Total Cost is : %18s \n", totalCost);
-
-
     }
-
-
 }
 
 

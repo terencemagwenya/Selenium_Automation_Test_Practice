@@ -24,7 +24,7 @@ public class AddToCartPage {
         By selectSize = By.id("layered_id_attribute_group_2");
         By selectColor = By.id("layered_id_attribute_group_24");
         By clickMore = By.cssSelector("a.button.lnk_view.btn.btn-default");
-        By quantinty_TextBox = By.id("quantity_wanted");
+        By quantity_TextBox = By.name("qty");
         By selectPink = By.name("Pink");
         By submitButton = By.name("Submit");
 
@@ -74,8 +74,9 @@ public void slideToPriceRange(String desiredPriceRange) {
 
     public void  clickMoreButton(){driver.findElement(clickMore).click();}
 
-    public void quantintyTextBox(){driver.findElement(quantinty_TextBox).clear();
-    driver.findElement(quantinty_TextBox).sendKeys("3");
+    public void quantityTextBox(){
+   driver.findElement(quantity_TextBox).clear();
+    driver.findElement(quantity_TextBox).sendKeys("3");
     }
 
     public void selectPinkColor(){driver.findElement(selectPink).click();}

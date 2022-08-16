@@ -39,13 +39,11 @@ public class Q2LoginDataProvider extends BaseTestCase {
         String url = "jdbc:mysql://localhost:3310/testdb";
         String user = "root";
         String pwd = "$post123";
-
         Connection conn = DriverManager.getConnection(url, user, pwd);
         Statement statement = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
         ResultSet resultSet = statement.executeQuery("Select username,password from login");
         resultSet.last();
         int numberOfRows = resultSet.getRow();
-
         ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
         int numberOfColumns = resultSetMetaData.getColumnCount();
         String data[][] = new String[numberOfRows][numberOfColumns];
@@ -58,6 +56,5 @@ public class Q2LoginDataProvider extends BaseTestCase {
             i++;
         }
         return data;
-
     }
 }
